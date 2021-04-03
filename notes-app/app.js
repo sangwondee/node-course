@@ -7,5 +7,16 @@ console.log(msg);
 // console.log(validator.isEmail('wichan@emai.com'));
 // console.log(validator.isURL('www.google.com'));
 
-const greenMsg = chalk.blue.inverse.bold("Error!");
+const greenMsg = chalk.blue.inverse.bold("Success!");
 console.log(greenMsg);
+
+const command = process.argv[2];
+
+if (command === 'add') {
+    console.log('Ading note!');
+} else if (command === 'remove') {
+    console.log('Removeing note!');
+}
+
+// console.log(process.argv);
+// console.log(process.argv[2]);
