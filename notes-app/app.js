@@ -1,22 +1,45 @@
-// const validator = require('validator'); // ดู parametor ได้ทีนี้ https://www.npmjs.com/package/validator
-const getNotes = require('./notes.js'); // ถ้าหาก export node ออกมาเป็น function ต้องเอาตัวแปล function มารองรับด้วย
 const chalk = require('chalk');
+const yargs = require('yargs');
+const getNotes = require('./notes.js'); // ถ้าหาก export node ออกมาเป็น function ต้องเอาตัวแปล function มารองรับด้วย
 
-const msg = getNotes();
-console.log(msg);
-// console.log(validator.isEmail('wichan@emai.com'));
-// console.log(validator.isURL('www.google.com'));
+//customize yarge version
+yargs.version('1.1.0');
 
-const greenMsg = chalk.blue.inverse.bold("Success!");
-console.log(greenMsg);
+// create add command
+yargs.command({
+    command: 'add',
+    describe: 'Add a new note',
+    handler: function() {
+        console.log('Adding a new note!');
+    }
+});
 
-const command = process.argv[2];
+// Create remove command
+yargs.command({
+    command: 'remove',
+    describe: 'Remove a note',
+    handler: function () {
+        console.log('Removing the note');
+    }
+})
 
-if (command === 'add') {
-    console.log('Ading note!');
-} else if (command === 'remove') {
-    console.log('Removeing note!');
-}
+// Create list command
+yargs.command({
+    command: 'list',
+    describe: 'List a note',
+    handler: function () {
+        console.log('Listing out all notes');
+    }
+});
 
-// console.log(process.argv);
-// console.log(process.argv[2]);
+// Create Read command
+yargs.command({
+    command: 'read',
+    describe: 'Read a note',
+    handler: function () {
+        console.log('Reading a note');
+    }
+})
+
+// add, remove, read, list
+console.log(yargs.argv);
