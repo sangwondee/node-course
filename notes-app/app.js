@@ -1,6 +1,8 @@
 const chalk = require('chalk');
 const yargs = require('yargs'); // อ่านที่นี้เพิ่มเติม https://www.npmjs.com/package/yargs
-const getNotes = require('./notes.js'); // ถ้าหาก export node ออกมาเป็น function ต้องเอาตัวแปล function มารองรับด้วย
+const notes = require('./notes.js');
+
+// console.log(notes.getNotes());
 
 //customize yarge version
 yargs.version('1.1.0');
@@ -22,8 +24,7 @@ yargs.command({
         }
     },
     handler: function(argv) {
-        console.log('Title:' + argv.title);
-        console.log('Body:' + argv.body);
+        notes.addNote(argv.title, argv.body);
     }
 });
 
