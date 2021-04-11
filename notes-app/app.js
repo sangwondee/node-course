@@ -1,8 +1,6 @@
 const yargs = require('yargs'); // อ่านที่นี้เพิ่มเติม https://www.npmjs.com/package/yargs
 const notes = require('./notes.js');
 
-// console.log(notes.getNotes());
-
 //customize yarge version
 yargs.version('1.1.0');
 
@@ -38,7 +36,7 @@ yargs.command({
             type: 'string'
         },
     },
-    handler: function (argv) {
+    handler(argv) {
         notes.removeNote(argv.title);
     }
 })
@@ -47,7 +45,7 @@ yargs.command({
 yargs.command({
     command: 'list',
     describe: 'List a note',
-    handler: function () {
+    handler () {
         console.log('Listing out all notes');
     }
 });
@@ -56,7 +54,7 @@ yargs.command({
 yargs.command({
     command: 'read',
     describe: 'Read a note',
-    handler: function () {
+    handler () {
         console.log('Reading a note');
     }
 })
