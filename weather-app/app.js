@@ -1,5 +1,3 @@
-// this is a
-
 console.log('Staing');
 
 setTimeout(() => {
@@ -11,4 +9,3 @@ setTimeout(() => {
 })
 
 console.log('ending');
-
