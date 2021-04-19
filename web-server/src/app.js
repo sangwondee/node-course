@@ -15,7 +15,7 @@ app.get('/about', (req, res) => {
 });
 
 app.get('/weather', (req, res) => {
-    res.send('Your Weather');
+    res.send('Your Weather test git fork');
 });
 
 // port 3000 is develop port
