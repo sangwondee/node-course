@@ -1,21 +1,15 @@
+const path = require('path');
 const express = require('express')
-
+const publicDirectoryPath = path.join(__dirname, '../public/')
 const app = express()
 
-app.get('', (req, res) => {
-    res.send('Hello Express !')
-})
-
-app.get('/help', (req, res) => {
-    res.send('Help page test');
-});
-
-app.get('/about', (req, res) => {
-    res.send('About page');
-});
+app.use(express.static(publicDirectoryPath));
 
 app.get('/weather', (req, res) => {
-    res.send('Your Weather test git fork');
+    res.send([{
+        forecast: "It is snowing !!!",
+        location: "Thailand"
+    }]);
 });
 
 // port 3000 is develop port
