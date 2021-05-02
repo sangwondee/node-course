@@ -1,45 +1,51 @@
 const path = require('path');
 const express = require('express')
+const hbs = require('hbs');
 
 const app = express()
 
 // Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public/')
-const viewPath = path.join(__dirname, '../templates')
+const viewPath = path.join(__dirname, '../templates/views')
+const partialsPath = path.join(__dirname, '../templates/partials')
 
 // Setup handlebars engine and views location
-app.set('view engine', 'hbs');
-app.set('views', viewPath);
+app.set('view engine', 'hbs')
+app.set('views', viewPath)
+hbs.registerPartials(partialsPath)
 
 // Setup static directory to serv
-app.use(express.static(publicDirectoryPath));
+app.use(express.static(publicDirectoryPath))
 
 app.get('', (req, res) => {
     res.render('index', {
         title : 'Weather',
-        name : 'Wichan'
+        name : 'Sangwondee'
     })
-});
+})
 
 app.get('/about', (req, res) => {
     res.render('about', {
         title: "About me",
-        name: 'Wichan'
-    });
-});
+        name: 'Sangwondee'
+    })
+})
 
 app.get('/help', (req, res) => {
     res.render('help', {
-        message : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam cumque quod aliquid placeat porro officiis tempore. Beatae libero vel eos dolorem aliquam minus odio quisquam, consectetur sapiente provident in atque!'
-    });
-});
+        helpText : 'This is some helpful Text',
+        title: 'Help',
+        name: 'Sangwondee'
+
+    })
+})
 
 app.get('/weather', (req, res) => {
     res.send([{
         forecast: "It is snowing !!!",
         location: "Thailand"
-    }]);
-});
+    }])
+})
 
 // port 3000 is develop port
 app.listen(3000, () => {
