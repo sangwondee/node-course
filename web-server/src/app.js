@@ -36,7 +36,6 @@ app.get('/help', (req, res) => {
         helpText : 'This is some helpful Text',
         title: 'Help',
         name: 'Sangwondee'
-
     })
 })
 
@@ -45,6 +44,23 @@ app.get('/weather', (req, res) => {
         forecast: "It is snowing !!!",
         location: "Thailand"
     }])
+})
+
+app.get('/help/*', (req, res) => {
+    res.render('404', {
+        title: '404',
+        name: 'sangwondee',
+        errorMessage: 'Help article not found.'
+    })
+})
+
+// มาอันสุดท้าย ตัว express ถ้ามันเจอ Route ที่มันเรียกหาแล้วมันจะหยุดทำงานทันที
+app.get('*', (req, res) => {
+    res.render('404', {
+      title: '404',
+      name: 'sangwondee',
+      errorMessage: 'Page not found.'
+    })
 })
 
 // port 3000 is develop port
