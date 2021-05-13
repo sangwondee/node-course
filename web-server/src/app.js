@@ -3,6 +3,8 @@ const express = require('express')
 const hbs = require('hbs')
 
 const app = express()
+// process.env.PORT จะใช้ port ของ heroku
+const port = process.env.PORT || 3000
 
 const geocode = require('./utils/geocode');
 const forecast = require('./utils/forecast');
@@ -99,6 +101,6 @@ app.get('*', (req, res) => {
 })
 
 // port 3000 is develop port
-app.listen(3000, () => {
-    console.log('Server is up on port 3000.')
+app.listen(port, () => {
+    console.log('Server is up on port' + port)
 })
