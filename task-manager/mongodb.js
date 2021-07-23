@@ -12,29 +12,27 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true}, (error, client) => 
 
     const db = client.db(databaseName)
 
-    // เราไม่สามารถใช้ id ได้เลยเพราะมันยังต้องเข้ารหัสอยู่
-    const userId = new ObjectID('60f914e9be47464b1f0176e3');
-
-    // db.collection('users').findOne({ _id: userId }, (error, user) => {
-    //     if (error) {
-    //         return console.log('Unable to fetch')
-    //     }
-
-    //     console.log(user)
-    // })
-
-    // db.collection('users').find({ age: 31 }).toArray((error, users) => {
-    //     console.log(users);
-    // })
-
-    db.collection('tasks').findOne({_id: userId }, (error, task) => {
-        if (error) {
-            return console.log('Your data not found !!!');
+    db.collection('tasks').updateMany({
+        completed : false
+    }, {
+        $set: {
+            completed: true
         }
-        console.log(task);
+    }).then((result) => {
+        console.log(result.modifiedCount);
+    }).catch((error) => {
+        console.log(error);
     })
 
-    db.collection('tasks').find({ completed: false }).toArray((error, tasks) => {
-        console.log(tasks);
-    })
+    // db.collection('users').updateOne({
+    //     _id: new ObjectID("60f911eec418361c2303967c")
+    // }, {
+    //     $inc: {
+    //         age: 1,
+    //     }
+    // }).then((result) => {
+    //     console.log(result);
+    // }).catch((error) => {
+    //     console.log(error);
+    // })
 })
