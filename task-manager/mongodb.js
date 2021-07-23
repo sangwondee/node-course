@@ -1,15 +1,6 @@
 // CRUD created read update delete
 
-// const mongodb = require('mongodb')
-// const MongoClient = mongodb.MongoClient
-// const ObjectID = mongodb.ObjectID
-
 const { MongoClient, ObjectID } = require('mongodb')
-
-const id = new ObjectID()
-
-console.log(id.id.length);
-console.log(id.toHexString().length);
 
 const connectionURL = 'mongodb://127.0.0.1:27017'
 const databaseName = 'task-manager'
@@ -21,49 +12,29 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true}, (error, client) => 
 
     const db = client.db(databaseName)
 
-    // db.collection('users').insertOne({
-    //     name: 'Wichan',
-    //     age: 31
-    // }, (error, result) => {
+    // เราไม่สามารถใช้ id ได้เลยเพราะมันยังต้องเข้ารหัสอยู่
+    const userId = new ObjectID('60f914e9be47464b1f0176e3');
+
+    // db.collection('users').findOne({ _id: userId }, (error, user) => {
     //     if (error) {
-    //         return console.log('Unable to insert user');
+    //         return console.log('Unable to fetch')
     //     }
-    //     console.log(result.ops);
-    //     console.log(result.insertedCount);
+
+    //     console.log(user)
     // })
 
-    // db.collection('users').insertMany([
-    //     {
-    //         name: 'Wichan1',
-    //         age: 1
-    //     }, {
-    //         name: 'Wichan2',
-    //         age: 2
-    //     }
-    // ], (error, result) => {
-    //     if (error) {
-    //         return console.log('Unable to insert documents!');
-    //     }
-
-    //     console.log(result.ops);
+    // db.collection('users').find({ age: 31 }).toArray((error, users) => {
+    //     console.log(users);
     // })
 
-    // const tasksData = [
-    //     { description : 'Clean the house', completed : true },
-    //     { description : 'Renew inspection', completed : false },
-    //     { description : 'Pot plants', completed : false }
-    // ]
+    db.collection('tasks').findOne({_id: userId }, (error, task) => {
+        if (error) {
+            return console.log('Your data not found !!!');
+        }
+        console.log(task);
+    })
 
-    // db.collection('tasks').insertMany(tasksData, (error, result) => {
-    //     if (error) {
-    //         return console.log('Unable to insert tasks !');
-    //     }
-
-    //     console.log(result.ops);
-    // })
-
-
-
-
-
+    db.collection('tasks').find({ completed: false }).toArray((error, tasks) => {
+        console.log(tasks);
+    })
 })
