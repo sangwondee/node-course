@@ -32,6 +32,7 @@ app.get('/users/:id', (req, res) => {
     const _id = req.params.id
 
     User.findById(_id).then((user) => {
+
         if (!user) {
             return res.status(404).send()
         }
@@ -43,7 +44,6 @@ app.get('/users/:id', (req, res) => {
     })
 })
 
-
 app.post('/tasks', (req, res) => {
 
     const task = new Task(req.body)
@@ -52,6 +52,30 @@ app.post('/tasks', (req, res) => {
         res.status(201).send(task)
     }).catch((e) => {
         res.status(400).send(e)
+    })
+})
+
+app.get('/tasks', (req, res) => {
+    Task.find({}).then((tasks) => {
+        res.send(tasks)
+    }).catch((e) => {
+        res.status(500).send()
+    })
+})
+
+app.get('/tasks/:id', (req, res) => {
+
+    const _id = req.params.id
+
+    Task.findById(_id).then((task) => {
+        // จะต้องเช็คแปปนี้เพราะ node มันจะคืนค่า status ออกมาเป็น success เสมอ
+        if (!task) {
+            return res.status(404).send()
+        }
+
+        res.send(task)
+    }).catch((e) => {
+        res.status(500).send()
     })
 })
 
