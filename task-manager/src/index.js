@@ -48,7 +48,30 @@ app.get('/users/:id', async (req, res) => {
     } catch (e) {
         res.status(500).send(e)
     }
+})
 
+app.patch('/users/:id', async (req, res) => {
+
+    // check key ที่ ส่งเข้ามาว่าถูกไหม
+    const updates = Object.keys(req.body)
+    const allowUpdates = ['name', 'email', 'password', 'age']
+    const isValidOperation = updates.every((update) => allowUpdates.includes(update))
+
+    if (!isValidOperation) {
+        return res.status(400).send({ error: 'Invalid Update!' })
+    }
+
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+
+        if (!user) {
+            return res.status(404).send()
+        }
+
+        res.send(user)
+    } catch (e) {
+        res.status(400).send(e)
+    }
 })
 
 
