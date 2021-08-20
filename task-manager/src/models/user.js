@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
+const bcrypt = require('bcryptjs')
 
-// Mongoose มันจะแปลงชื่อ Model จากตัวใหญ่เป็นตัวเล็กแล้วเติม s ให้อัตโนมัติ
-const User = mongoose.model('User', {
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -40,5 +40,18 @@ const User = mongoose.model('User', {
         }
     }
 })
+
+// สั่งให้มันไปใช้ middleware ก่อนค่อง save
+userSchema.pre('save', async function (next) {
+    const user = this
+
+    if (user.isModified('password')) {
+        user.password = await bcrypt.hash(user.password, 8)
+    }
+
+    next()
+})
+
+const User = mongoose.model('User', userSchema)
 
 module.exports = User
