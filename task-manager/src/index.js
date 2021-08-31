@@ -15,14 +15,9 @@ app.listen(port, () => {
     console.log('Server is up on port ' + port);
 })
 
-const Task = require('./models/task')
 const User = require('./models/user')
-const main = async () => {
-    // const task = await Task.findById('612c5b3ca2b5100a3377e308')
-    // // เรียก data เหมือน relations
-    // await task.populate('owner').execPopulate()
-    // console.log(task.owner);
 
+const main = async () => {
     const user = await User.findById('612c5b18a2b5100a3377e305')
     await user.populate('tasks').execPopulate()
     console.log(user.tasks)
