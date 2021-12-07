@@ -1,14 +1,28 @@
-var API_KEY = '816c5e1d58e6fb7031fd9841c3df7e52-adf6de59-7d22f190'
-var DOMAIN = 'sandbox51d3c2591a234af08c0bc4bc96d7b55f.mailgun.org';
-var mailgun = require('mailgun-js')({apiKey: API_KEY, domain: DOMAIN});
+const sgMail = require('@sendgrid/mail')
 
-const data = {
-  from: 'Excited User <me@samples.mailgun.org>',
-  to: 'sangwondee@gmail.com',
-  subject: 'Hello',
-  text: 'Testing some Mailgun awesomeness!'
-};
+const sendgridAPIKey = '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'
 
-mailgun.messages().send(data, (error, body) => {
-  console.log(body);
-});
+sgMail.setApiKey(sendgridAPIKey)
+
+const sendWelcomeEmail = (email, name) => {
+    sgMail.send({
+        to: email,
+        from: 'andrew@mead.io',
+        subject: 'Thanks for joining in!',
+        text: `Welcome to the app, ${name}. Let me know how you get along with the app.`
+    })
+}
+
+const sendCancelationEmail = (email, name) => {
+    sgMail.send({
+        to: email,
+        from: 'andrew@mead.io',
+        subject: 'Sorry to see you go!',
+        text: `Goodbye, ${name}. I hope to see you back sometime soon.`
+    })
+}
+
+module.exports = {
+    sendWelcomeEmail,
+    sendCancelationEmail
+}
