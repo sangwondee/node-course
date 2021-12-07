@@ -1,28 +1,38 @@
-const sgMail = require('@sendgrid/mail')
+const nodemailer = require('nodemailer')
 
-const sendgridAPIKey = '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'
-
-sgMail.setApiKey(sendgridAPIKey)
-
-const sendWelcomeEmail = (email, name) => {
-    sgMail.send({
-        to: email,
-        from: 'andrew@mead.io',
-        subject: 'Thanks for joining in!',
-        text: `Welcome to the app, ${name}. Let me know how you get along with the app.`
+function transporter() {
+    return nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'sangwondee@gmail.com',  // Your email address
+            pass: lovenamo  // Your password (or special app password)
+        }
     })
 }
 
-const sendCancelationEmail = (email, name) => {
-    sgMail.send({
+function sendWelcomeEmail(email, name) {
+    const transporterObject = transporter()
+    transporterObject.sendMail({
+        from: 'Task Manager API <sangwondee@gmail.com>',
         to: email,
-        from: 'andrew@mead.io',
-        subject: 'Sorry to see you go!',
-        text: `Goodbye, ${name}. I hope to see you back sometime soon.`
+        subject: 'Thanks for joining!',
+        text: `Welcome to our service, ${name}!`,
+        html: `<b>Welcome to our service, ${name}!</b>`
+    })
+}
+
+function sendDeleteEmail(email, name) {
+    const transporterObject = transporter()
+    transporterObject.sendMail({
+        from: 'Task Manager API <sangwondee@gmail.com>',
+        to: email,
+        subject: 'We\'re sorry to see you leave',
+        text: `We hope to see you back again someday, ${name}!`,
+        html: `<b>We hope to see you back again someday, ${name}!</b>`
     })
 }
 
 module.exports = {
     sendWelcomeEmail,
-    sendCancelationEmail
+    sendDeleteEmail
 }
